@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>eventRegistry Plugin Test</title>
+    <link href="https://cdn.jsdelivr.net/npm/qunit@2.20.0/qunit/qunit.min.css" rel="stylesheet">
+</head>
+<body>
+<div id="qunit"></div>
+<div id="qunit-fixture"></div>
+
+<!-- use your version -->
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<!--<script src="https://code.jquery.com/jquery-1.6.3.min.js"></script>-->
+<!--<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>-->
+<!--<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>-->
+<script src="https://cdn.jsdelivr.net/npm/qunit@2.20.0/qunit/qunit.min.js"></script>
+
+<script src="../src/jquery.eventRegistry.js"></script>
+<script>
+  QUnit.test("eventRegistry Plugin", function(assert) {
+    // Simulate DOM elements for testing
+    const $testElement = $('<div>').addClass('test-element');
+
+    // Before each test, reset added events and eventRegistry
+    $.removeEvents();
+    $('.test-element').off(); // Clear any previously attached events
+    $('.test-element').remove(); // Remove any existing test elements
+
+    // Add test element to the body
+    $('body').append($testElement);
+
+    // Add an event to the test element
+    $testElement.addEvent('click', function() {
+      console.log('Test element clicked!');
+    });
+
+    // Trigger a click on the test element and check if the event fires
+    $testElement.trigger('click');
+
+    // Check if the event was added to the test element
+    assert.equal($._data($testElement[0], 'events').click.length, 1, "Event added");
+
+    // Remove all events and check if the event was removed
+    $.removeEvents();
+    assert.strictEqual($._data($testElement[0], 'events'), undefined, "Events removed");
+  });
+</script>
+</body>
+</html>
