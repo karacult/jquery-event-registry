@@ -18,7 +18,7 @@ Adding Events
 ```javascript
 // Adding a click event to elements with class 'example'
 $('.example').addEvent('click', function() {
-console.log('Click event triggered!');
+  console.log('Click event triggered!');
 });
 ```
 
@@ -40,17 +40,29 @@ Here's a simple example demonstrating how to use the EventRegistry plugin:
     <meta charset="UTF-8">
     <title>EventRegistry Example</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="path/to/jquery.eventRegistry.js"></script>
+    <script src="/path/to/jquery.eventRegistry.js"></script>
 </head>
 <body>
-php
-Copy code
-<button class="example">Click me</button>
 
+<button class="click1">Click me</button>
+<button class="click2">Click me also</button>
 <script>
-    // Adding a click event to elements with class 'example'
-    $('.example').addEvent('click', function() {
-        console.log('Click event triggered!');
+    // Adding a clicks to buttons and on the document
+    $(function() {
+        $('.click1').addEvent('click', function() {
+            console.log('Click1 event triggered!');
+        });
+
+        $('.click2').addEvent('click', function() {
+            console.log('Click2 event triggered! ');
+        });
+
+        //Delete all registered events on any click.
+        $(document).addEvent('click', function() {
+            console.log('Document click registered');
+            console.log('Next time you click anywhere event won\'t be triggered');
+            $.removeEvents();
+        });
     });
 </script>
 </body>
