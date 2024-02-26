@@ -34,9 +34,9 @@ $.removeEvents();
 
 ## Example
 
-Here's a simple example demonstrating how to use the EventRegistry plugin:
-Check ./test/example.html to see it in action
+Here's a simple example demonstrating how to use the EventRegistry plugin
 
+Check ./test/example.html to see it in action
 
 ```html
 <script>
