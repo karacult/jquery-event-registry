@@ -2,7 +2,7 @@
    eventRegistry is a jQuery plugin designed to register new events and remove them
    before a new page is loaded via AJAX, preventing the same events from being
    registered twice. This plugin is particularly useful in projects utilizing
-   libraries like https://www.npmjs.com/package/pjax.
+   libraries like https://github.com/MoOx/pjax
 */
 
 (function($) {
@@ -29,10 +29,11 @@
     const elements = this;
     elements.each(function() {
       const element = this;
-      if (!element.addedEvents) {
+      if (!element.addedEvents)
         element.addedEvents = [];
-        eventRegistry.push(element);
-      }
+
+      eventRegistry.push(element);
+
       element.addedEvents.push({
         event: event,
         selector: selectorOrHandler,
@@ -41,7 +42,8 @@
     });
 
     // Attach the event listener to the selected elements
-    return this.on(event, selectorOrHandler, handler);
+    if(eventRegistry.length !== 0)
+      return this.on(event, selectorOrHandler, handler);
   };
 
   /**

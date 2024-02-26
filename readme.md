@@ -8,7 +8,7 @@ Include jQuery and the EventRegistry plugin in your HTML file:
 
 ```html
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="path/to/jquery.eventRegistry.js"></script>
+<script src="/src/jquery.eventRegistry.js"></script>
 ```
 
 ## Usage
@@ -16,8 +16,11 @@ Include jQuery and the EventRegistry plugin in your HTML file:
 Adding Events
 
 ```javascript
-// Adding a click event to elements with class 'example'
-$('.example').addEvent('click', function() {
+$(document).addEvent('click', function() {
+  console.log('Click event triggered!');
+});
+
+$(body).addEvent('load', function() {
   console.log('Click event triggered!');
 });
 ```
@@ -32,41 +35,20 @@ $.removeEvents();
 ## Example
 
 Here's a simple example demonstrating how to use the EventRegistry plugin:
+Check ./test/example.html to see it in action
+
 
 ```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>EventRegistry Example</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="/path/to/jquery.eventRegistry.js"></script>
-</head>
-<body>
-
-<button class="click1">Click me</button>
-<button class="click2">Click me also</button>
 <script>
-    // Adding a clicks to buttons and on the document
     $(function() {
-        $('.click1').addEvent('click', function() {
-            console.log('Click1 event triggered!');
-        });
+        // removeEvents has to be on each page before events or on pjax:send event.
+        $.removeEvents();
 
-        $('.click2').addEvent('click', function() {
-            console.log('Click2 event triggered! ');
-        });
-
-        //Delete all registered events on any click.
         $(document).addEvent('click', function() {
-            console.log('Document click registered');
-            console.log('Next time you click anywhere event won\'t be triggered');
-            $.removeEvents();
+            console.log('Click event triggered! - Event ');
         });
     });
 </script>
-</body>
-</html>
 ```
 
 
@@ -78,9 +60,10 @@ Here's a simple example demonstrating how to use the EventRegistry plugin:
 // load pjax.js
 $(function () {
     var pjax = new Pjax({selectors: [".content"]});
-
+  
     $(document).on('pjax:send', function() {
-        $.removeEvents();
+      // Removing all previously added events
+      $.removeEvents();
     });
 });
 ```

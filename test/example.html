@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EventRegistry Example</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../src/jquery.eventRegistry.js"></script>
+</head>
+<body>
+<h1>Click the first button, then anywhere else, and check the console.</h1>
+<button class="default">Simulate pjax</button>
+<button class="eventRegistry">Simulate pjax + eventRegistry</button>
+<script>
+  $(function() {
+
+    // Simulate pjax request (I cannot use pjax in this example because of CORS problem in local files)
+    $('.default').on('click', function() {
+
+      // Register onclick each time it's loaded and clicked on; any event can be used
+      $(document).on('click', function() {
+        console.log('Click event triggered! - Event ');
+      });
+    });
+
+    // When you click once, you will see the same message more than two times
+    $('.eventRegistry').on('click', function() {
+      // removeEvents has to be on each page before events or you can set it on the event of pjax sending request like in readme.md
+      $.removeEvents();
+
+      $(document).addEvent('click', function() {
+        console.log('Click event triggered! - Event ');
+      });
+
+    });
+
+  });
+</script>
+</body>
+</html>
